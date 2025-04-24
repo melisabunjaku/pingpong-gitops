@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pingpong
+  namespace: argocd  # This should be 'argocd' to be managed by Argo CD
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/melisabunjaku/pingpong-gitops
+    targetRevision: HEAD
+    path: base
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: project-exercises  # This is where the app will be deployed (your target namespace)
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
